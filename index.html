@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> VMS Live View & Playback </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+        .container_grid{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 0.8fr 0.4fr 0.2fr 0.3fr 0.5fr 0.4fr;
+            grid-template-areas:
+            "pic1 pic2 pic3" 
+            "pic1 pic2 pic6"
+            "pic1 pic5 pic6"
+            "pic4 pic5 pic6"
+            "pic4 pic5 pic7"
+            "pic4 pic8 pic8";
+            grid-gap: 0.5rem;
+            
+        }
+        .pic1{
+            grid-area: pic1;
+            position: relative;
+            overflow: hidden;
+        }
+        .pic2{
+            grid-area: pic2;
+            position: relative;
+            overflow: hidden;
+        }
+        .pic3{
+            grid-area: pic3;
+            position: relative;
+            overflow: hidden;
+        }
+        .pic4{
+            grid-area: pic4;
+            position: relative;
+            overflow: hidden;
+        }
+        .pic5{
+            grid-area: pic5;
+            position: relative;
+            overflow: hidden;
+        }
+        .pic6{
+            grid-area: pic6;
+            position: relative;
+            overflow: hidden;
+        }
+        .pic7{
+            grid-area: pic7;
+            position: relative;
+            overflow: hidden;
+        }
+        .pic8{
+            grid-area: pic8;
+            background-color: rgba(0, 152, 244, 1);
+        }
+        .server_option{
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: rgba(134, 134, 134, 1);
+            color: white;
+            padding: 4px 6px 4px 6px;
+            display: flex;
+            justify-content: space-between;
+            
+        }
+        .server_option span{
+            color: white;
+            font-family: Lato;
+        }
+        .server_option div{
+            display: inline-block;
+            background-color: white;
+            padding: 4px 8px 4px 8px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .device_content{
+            padding: 40px 15px 0 15px;
+        }
+
+        /* Pic8 Grid */
+        .pic8_container{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            grid-template-areas: 
+            "eightone eighttwo eightthree eightfour eightfive eightsix eightseven"
+            "xone xtwo xthree xfour xfive xsix xseven";
+            padding-left: 40px;
+            padding-right: 20px;
+            padding-top: 40px;
+        }
+        .pic8_container div{
+            margin-right: 20px;
+        }
+        .pic8_container div:nth-child(8),.pic8_container div:nth-child(9),.pic8_container div:nth-child(10),.pic8_container div:nth-child(11),.pic8_container div:nth-child(12),.pic8_container div:nth-child(13),.pic8_container div:nth-child(14){
+            margin-top: 10px;
+        }
+        .eight_one{
+            grid-area: eightone;
+        }
+        .eight_two{
+            grid-area: eighttwo;
+        }
+        .eight_three{
+            grid-area: eightthree;
+        }
+        .eight_four{
+            grid-area: eightfour;
+        }
+        .eight_five{
+            grid-area: eightfive;
+        }
+        .eight_six{
+            grid-area: eightsix;
+        }
+        .eight_seven{
+            grid-area: eightseven;
+        }
+        .x_one{
+            grid-area: xone;
+        }
+        .x_two{
+            grid-area: xtwo;
+        }
+        .x_three{
+            grid-area: xthree;
+        }
+        .x_four{
+            grid-area: xfour;
+        }
+        .x_five{
+            grid-area: xfive;
+        }
+        .x_six{
+            grid-area: xsix;
+        }
+        .x_seven{
+            grid-area: xseven;
+        }
+
+        /* Nav main */
+        .nav_main{
+            background-color: rgba(0, 152, 244, 1);
+            padding-top: 18px;
+            padding-bottom: 18px;
+        }
+        .rec_btn{
+            background-color: rgba(239, 83, 80, 1);
+            height: 40px;
+            padding: 9px 6px 9px 6px;
+            border-radius: 50%;
+        }
+        .brand_logo{
+            height: 52px;
+            width: 131px;
+        }
+        
+
+        @media screen and (max-width:768px) {
+            .container_grid{
+                grid-template-columns: 1fr;
+                grid-template-rows: 0.4fr 0.4fr 0.4fr 0.4fr 0.3fr 0.3fr 0.2fr 0.2fr;
+                grid-template-areas: 
+                "pic1"
+                "pic2"
+                "pic3"
+                "pic4"
+                "pic5"
+                "pic6"
+                "pic7"
+                "pic8";
+            }
+            .pic8_container{
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+                grid-template-areas: 
+                "eightone xone"
+                "eighttwo xtwo"
+                "eightthree xthree"
+                "eightfour xfour"
+                "eightfive xfive"
+                "eightsix xsix"
+                "eightseven xseven";
+            }
+            .pic8_container div{
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+            .pic8_container div:nth-child(8),.pic8_container div:nth-child(9),.pic8_container div:nth-child(10),.pic8_container div:nth-child(11),.pic8_container div:nth-child(12),.pic8_container div:nth-child(13),.pic8_container div:nth-child(14){
+                margin-top: 50px;
+            }
+
+            .head_time{
+                font-size: 8px;
+            }
+            .head_date{
+                font-size: 6px;
+            }
+            .brand_logo{
+            height: 34px;
+            width: 85px;
+        }
+
+        }
+
+        @media screen and (max-width:340px) {
+            .brand_logo{
+            height: 24px;
+            width: 60px;
+        }
+        }
+    </style>
+</head>
+<body>
+    <section class="nav_main text-white">
+        <div class="container">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <img class="brand_logo"  src="https://i.ibb.co/PWhMrWV/image-3.png" alt="Brand Logo">
+                </div>
+
+                <div class="d-flex align-items-center">
+                    <div class="d-flex flex-column me-3">
+                        <span class="head_time" style="font-size: 16px;">24 : 00 : 00</span>
+                        <span class="head_date" style="font-size: 12px;">31 . 08 .2022</span>
+                    </div>
+                    <div class="rec_btn me-3">REC</div>
+                    <div style="font-size: 32px; margin-right: 14px;"><i class="fa-solid fa-calendar-days" style="color: #ffffff;"></i></div>
+                    <div style="font-size: 32px;"><i class="fa-solid fa-rotate" style="color: #ffffff;"></i></div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mt-4 pb-3">
+      <div class="container">
+            <div class="container_grid">
+                <div class="pic1">
+                    <img height="100%" width="100%" src="https://i.ibb.co/dm43h5j/Rectangle-643.png" alt="Server Picture">
+                    <div class="server_option">
+                        <span>Server Room</span>
+                        <div>
+                            <i class="fa-solid fa-server" style="color: #aba850;"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="pic2">
+                    <img height="100%" width="100%" src="https://i.ibb.co/7QYmWz2/Rectangle-644.png" alt="Server Picture">
+                    <div class="server_option">
+                        <span>Server Room</span>
+                        <div>
+                            <i class="fa-solid fa-server" style="color: #aba850;"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="pic3">
+                    <img height="100%" width="100%" src="https://i.ibb.co/cYMZ6hx/Rectangle-647.png" alt="Server Picture">
+                    <div class="server_option">
+                        <span>Server Room</span>
+                        <div>
+                            <i class="fa-solid fa-server" style="color: #aba850;"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="pic4">
+                    <img height="100%" width="100%" src="https://i.ibb.co/XfPGjT6/Rectangle-645.png" alt="Server Picture">
+                    <div class="server_option">
+                        <span>Server Room</span>
+                        <div>
+                            <i class="fa-solid fa-server" style="color: #aba850;"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="pic5">
+                    <img height="100%" width="100%" src="https://i.ibb.co/HCNLztt/Rectangle-646.png" alt="Server Picture">
+                    <div class="server_option">
+                        <span>Server Room</span>
+                        <div>
+                            <i class="fa-solid fa-server" style="color: #aba850;"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="pic6">
+                    <img height="100%" width="100%" src="https://i.ibb.co/JjY7pY2/Rectangle-648.png" alt="Server Picture">
+                    <div class="server_option">
+                        <span>Server Room</span>
+                        <div>
+                            <i class="fa-solid fa-server" style="color: #aba850;"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="pic7">
+                    <img height="100%" width="100%" src="https://i.ibb.co/FssHZ37/Rectangle-648-1.png" alt="Server Picture">
+                    <div class="server_option">
+                        <span>Server Room</span>
+                        <div>
+                            <i class="fa-solid fa-server" style="color: #aba850;"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="pic8">
+                    <div class="pic8_container">
+                            <div class="eight_one"><img height="100%" width="100%" src="https://i.ibb.co/mzrrXcn/Group-1000007092.png" alt="Device"></div>
+                            <div class="eight_two"><img height="100%" width="100%" src="https://i.ibb.co/mzrrXcn/Group-1000007092.png" alt="Device"></div>
+                            <div class="eight_three"><img height="100%" width="100%" src="https://i.ibb.co/mzrrXcn/Group-1000007092.png" alt="Device"></div>
+                            <div class="eight_four"><img height="100%" width="100%" src="https://i.ibb.co/mzrrXcn/Group-1000007092.png" alt="Device"></div>
+                            <div class="eight_five"><img height="100%" width="100%" src="https://i.ibb.co/mzrrXcn/Group-1000007092.png" alt="Device"></div>
+                            <div class="eight_six"><img height="100%" width="100%" src="https://i.ibb.co/mzrrXcn/Group-1000007092.png" alt="Device"></div>
+                            <div class="eight_seven"><img height="100%" width="100%" src="https://i.ibb.co/mzrrXcn/Group-1000007092.png" alt="Device"></div>
+        
+                            <div style="text-align: center; color: white; " class="x_one">1 X 1</div>
+                            <div style="text-align: center; color: white; " class="x_two">1 X 1</div>
+                            <div style="text-align: center; color: white; " class="x_three">1 X 1</div>
+                            <div style="text-align: center; color: white; " class="x_four">1 X 1</div>
+                            <div style="text-align: center; color: white; " class="x_five">1 X 1</div>
+                            <div style="text-align: center; color: white; " class="x_six">1 X 1</div>
+                            <div style="text-align: center; color: white; " class="x_seven">1 X 1</div>
+                    </div>
+                    
+                </div>
+            </div>
+
+        </div>
+        
+
+
+    </section>
+
+    
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
